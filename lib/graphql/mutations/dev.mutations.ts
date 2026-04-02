@@ -20,3 +20,22 @@ export const CREATE_DEV = gql`
     }
   }
 `;
+
+export const LOGIN_DEV = gql`
+  mutation LoginDev(
+  $email: String!
+  $password: String!
+  ) {
+    loginDev(email: $email
+    password: $password
+    ) {
+      token
+      dev {
+        id
+        firstName
+        lastName
+        email
+      }
+    }
+  }
+`; 

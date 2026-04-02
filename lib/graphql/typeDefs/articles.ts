@@ -15,4 +15,13 @@ export const articlesTypeDefs = gql`
     articles: [Article!]!
     article(id: ID!): Article
   }
+
+  extend type Mutation {
+  createArticle(
+    title: String!
+    content: String!
+    category: String!
+    author: String!
+  ): Article!
+}
 `;

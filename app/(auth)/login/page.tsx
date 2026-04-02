@@ -2,34 +2,50 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useMutation } from "@apollo/client/react";
+import { LOGIN_DEV } from "@/lib/graphql/mutations/dev.mutations";
 
 export default function LoginPage() {
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("")
+
+  const [loginDev, { loading }] = useMutation(LOGIN_DEV, {
+    onCompleted: (data: any) => {
+      document.cookie = `token=${data.loginDev.token}; path=/; max-age=${7 * 24 * 60 * 60}; SameSite=Strict`;
+      router.push('/dashboard')
+    },
+    onError: (error) => {
+      setErrorMsg(error.message);
+    },
+  })
 
   const handleSubmit = async (e: React.MouseEvent) => {
     e.preventDefault();
-    setLoading(true);
-    // TODO: connect to your auth logic
-    setTimeout(() => setLoading(false), 1500);
+    setErrorMsg("");
+
+    if (!email || !password) {
+      setErrorMsg('Please fill in all fields')
+      return
+    }
+
+    loginDev({ variables: { email, password } })
   };
 
   return (
     <div className="min-h-screen bg-white flex">
-      {/* Left panel */}
       <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden flex-col justify-between p-12"
         style={{
           background: "linear-gradient(135deg, #7c3aed 0%, #6d28d9 40%, #0891b2 100%)",
         }}
       >
-        {/* Decorative blobs */}
         <div className="absolute top-0 right-0 w-80 h-80 rounded-full bg-white opacity-5 -translate-y-1/2 translate-x-1/2" />
         <div className="absolute bottom-0 left-0 w-64 h-64 rounded-full bg-white opacity-5 translate-y-1/2 -translate-x-1/2" />
         <div className="absolute top-1/2 left-1/2 w-96 h-96 rounded-full bg-cyan-400 opacity-10 -translate-x-1/2 -translate-y-1/2 blur-3xl" />
 
-        {/* Logo */}
         <div className="relative z-10">
           <Link href="/" className="inline-flex items-center gap-2">
             <span className="font-display font-extrabold text-2xl text-white">
@@ -39,7 +55,6 @@ export default function LoginPage() {
           </Link>
         </div>
 
-        {/* Center content */}
         <div className="relative z-10 space-y-8">
           <div>
             <h2 className="font-display font-extrabold text-4xl text-white leading-tight mb-4">
@@ -50,7 +65,6 @@ export default function LoginPage() {
             </p>
           </div>
 
-          {/* Stats */}
           <div className="grid grid-cols-3 gap-4">
             {[
               { value: "400+", label: "Articles" },
@@ -65,7 +79,6 @@ export default function LoginPage() {
           </div>
         </div>
 
-        {/* Bottom quote */}
         <div className="relative z-10 border-l-2 border-cyan-300/50 pl-4">
           <p className="text-white/70 text-sm italic">
             "WikiDev has become my first stop whenever I'm learning something new."
@@ -74,10 +87,8 @@ export default function LoginPage() {
         </div>
       </div>
 
-      {/* Right panel - Form */}
       <div className="w-full lg:w-1/2 flex items-center justify-center px-6 py-12">
         <div className="w-full max-w-md">
-          {/* Mobile logo */}
           <div className="lg:hidden mb-10 text-center">
             <Link href="/">
               <span className="font-display font-extrabold text-2xl text-gray-900">
@@ -106,7 +117,6 @@ export default function LoginPage() {
             </p>
           </div>
 
-          {/* OAuth */}
           <button className="w-full flex items-center justify-center gap-3 border border-gray-200 rounded-xl py-3 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors mb-6 shadow-sm">
             <svg className="w-5 h-5" viewBox="0 0 24 24">
               <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
@@ -117,16 +127,13 @@ export default function LoginPage() {
             Continue with Google
           </button>
 
-          {/* Divider */}
           <div className="flex items-center gap-4 mb-6">
             <div className="flex-1 h-px bg-gray-200" />
             <span className="text-xs text-gray-400 font-medium">or sign in with email</span>
             <div className="flex-1 h-px bg-gray-200" />
           </div>
 
-          {/* Form */}
           <div className="space-y-4">
-            {/* Email */}
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-1.5">Email</label>
               <input
@@ -138,7 +145,6 @@ export default function LoginPage() {
               />
             </div>
 
-            {/* Password */}
             <div>
               <div className="flex items-center justify-between mb-1.5">
                 <label className="text-sm font-semibold text-gray-700">Password</label>
@@ -163,7 +169,6 @@ export default function LoginPage() {
               </div>
             </div>
 
-            {/* Submit */}
             <button
               onClick={handleSubmit}
               disabled={loading}

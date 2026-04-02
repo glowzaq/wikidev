@@ -49,7 +49,6 @@ export default function RegisterPage() {
     e.preventDefault();
     setErrorMsg("");
 
-    // Basic client-side validation
     if (!form.firstName || !form.lastName || !form.email || !form.password) {
       setErrorMsg("Please fill in all fields.");
       return;
@@ -75,7 +74,6 @@ export default function RegisterPage() {
 
   return (
     <div className="min-h-screen bg-white flex">
-      {/* Left panel */}
       <div
         className="hidden lg:flex lg:w-1/2 relative overflow-hidden flex-col justify-between p-12"
         style={{
@@ -124,7 +122,6 @@ export default function RegisterPage() {
         </div>
       </div>
 
-      {/* Right panel */}
       <div className="w-full lg:w-1/2 flex items-center justify-center px-6 py-12 overflow-y-auto">
         <div className="w-full max-w-md">
           <div className="lg:hidden mb-10 text-center">
@@ -165,7 +162,6 @@ export default function RegisterPage() {
             <div className="flex-1 h-px bg-gray-200" />
           </div>
 
-          {/* Error message */}
           {errorMsg && (
             <div className="mb-4 bg-red-50 border border-red-200 text-red-600 text-sm rounded-xl px-4 py-3">
               {errorMsg}
