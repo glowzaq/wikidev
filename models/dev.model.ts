@@ -5,6 +5,9 @@ export interface IDev extends Document {
     lastName: string,
     email: string,
     password: string,
+    role: "user" | "admin",
+    bio?: string,
+    bookmarks: mongoose.Types.ObjectId[],
     createdAt: Date,
     updatedAt: Date
 }
@@ -28,6 +31,19 @@ const devSchema = new Schema<IDev>(
             type: String,
             required: true,
         },
+        role: {
+            type: String,
+            enum: ["user", "admin"],
+            default: "user"
+        },
+        bio: {
+            type: String,
+            default: ""
+        },
+        bookmarks: [{
+            type: Schema.Types.ObjectId,
+            ref: 'Article'
+        }],
         createdAt: {
             type: Date,
             default: Date.now

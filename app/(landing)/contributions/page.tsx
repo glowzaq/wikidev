@@ -1,9 +1,10 @@
 import React from 'react'
-import DashboardClient from '.';
 import { cookies } from 'next/headers';
 import { jwtVerify } from 'jose';
+import { redirect } from 'next/navigation';
+import ContributionsClient from './ContributionsClient';
 
-export default async function page () {
+export default async function ContributionsPage() {
     const cookieStorage = await cookies()
     const token = cookieStorage.get('token')?.value
 
@@ -22,8 +23,11 @@ export default async function page () {
             };
         } catch (error) {
             console.error("Invalid or expired token")
-            user = null;
+            redirect('/login')
         }
+    } else {
+        redirect('/login')
     }
-    return <DashboardClient user={user ?? undefined}/>
+
+    return <ContributionsClient user={user} />
 }

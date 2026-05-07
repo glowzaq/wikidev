@@ -37,20 +37,12 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen bg-white flex">
-      <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden flex-col justify-between p-12"
-        style={{
-          background: "linear-gradient(135deg, #7c3aed 0%, #6d28d9 40%, #0891b2 100%)",
-        }}
-      >
-        <div className="absolute top-0 right-0 w-80 h-80 rounded-full bg-white opacity-5 -translate-y-1/2 translate-x-1/2" />
-        <div className="absolute bottom-0 left-0 w-64 h-64 rounded-full bg-white opacity-5 translate-y-1/2 -translate-x-1/2" />
-        <div className="absolute top-1/2 left-1/2 w-96 h-96 rounded-full bg-cyan-400 opacity-10 -translate-x-1/2 -translate-y-1/2 blur-3xl" />
-
+      <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden flex-col justify-between p-12 bg-gray-900">
         <div className="relative z-10">
           <Link href="/" className="inline-flex items-center gap-2">
             <span className="font-display font-extrabold text-2xl text-white">
-              wiki<span className="text-cyan-300">dev</span>
-              <span className="inline-block w-2 h-2 rounded-full bg-cyan-300 ml-0.5 mb-1 align-middle" />
+              wiki<span className="text-gray-400">dev</span>
+              <span className="inline-block w-2 h-2 rounded-full bg-white ml-0.5 mb-1 align-middle" />
             </span>
           </Link>
         </div>
@@ -60,7 +52,7 @@ export default function LoginPage() {
             <h2 className="font-display font-extrabold text-4xl text-white leading-tight mb-4">
               Welcome back,<br />developer.
             </h2>
-            <p className="text-white/70 text-lg leading-relaxed">
+            <p className="text-gray-400 text-lg leading-relaxed">
               Pick up right where you left off. Your articles, bookmarks, and contributions are waiting.
             </p>
           </div>
@@ -71,19 +63,19 @@ export default function LoginPage() {
               { value: "6", label: "Categories" },
               { value: "1k+", label: "Devs" },
             ].map((s) => (
-              <div key={s.label} className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 text-center border border-white/10">
+              <div key={s.label} className="bg-white/5 rounded-xl p-4 text-center border border-white/10">
                 <p className="font-display font-bold text-2xl text-white">{s.value}</p>
-                <p className="text-white/60 text-xs mt-1">{s.label}</p>
+                <p className="text-gray-500 text-xs mt-1">{s.label}</p>
               </div>
             ))}
           </div>
         </div>
 
-        <div className="relative z-10 border-l-2 border-cyan-300/50 pl-4">
-          <p className="text-white/70 text-sm italic">
-            "WikiDev has become my first stop whenever I'm learning something new."
+        <div className="relative z-10 border-l-2 border-gray-600 pl-4">
+          <p className="text-gray-400 text-sm italic">
+            &quot;WikiDev has become my first stop whenever I&apos;m learning something new.&quot;
           </p>
-          <p className="text-cyan-300 text-xs font-semibold mt-2">— A happy contributor</p>
+          <p className="text-gray-500 text-xs font-semibold mt-2">&mdash; A happy contributor</p>
         </div>
       </div>
 
@@ -92,17 +84,8 @@ export default function LoginPage() {
           <div className="lg:hidden mb-10 text-center">
             <Link href="/">
               <span className="font-display font-extrabold text-2xl text-gray-900">
-                wiki
-                <span
-                  style={{
-                    background: "linear-gradient(135deg, #7c3aed, #06b6d4)",
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                  }}
-                >
-                  dev
-                </span>
-                <span className="inline-block w-2 h-2 rounded-full bg-violet-500 ml-0.5 mb-1 align-middle" />
+                wiki<span className="gradient-text">dev</span>
+                <span className="logo-dot" />
               </span>
             </Link>
           </div>
@@ -110,14 +93,14 @@ export default function LoginPage() {
           <div className="mb-8">
             <h1 className="font-display font-extrabold text-3xl text-gray-900 mb-2">Sign in</h1>
             <p className="text-gray-500 text-sm">
-              Don't have an account?{" "}
-              <Link href="/register" className="text-violet-600 font-semibold hover:text-violet-700 transition-colors">
+              Don&apos;t have an account?{" "}
+              <Link href="/register" className="text-gray-900 font-semibold hover:underline transition-colors">
                 Create one free
               </Link>
             </p>
           </div>
 
-          <button className="w-full flex items-center justify-center gap-3 border border-gray-200 rounded-xl py-3 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors mb-6 shadow-sm">
+          <button className="w-full flex items-center justify-center gap-3 border border-gray-200 rounded-lg py-3 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors mb-6">
             <svg className="w-5 h-5" viewBox="0 0 24 24">
               <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
               <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
@@ -133,6 +116,12 @@ export default function LoginPage() {
             <div className="flex-1 h-px bg-gray-200" />
           </div>
 
+          {errorMsg && (
+            <div className="mb-4 bg-red-50 border border-red-200 text-red-600 text-sm rounded-lg px-4 py-3">
+              {errorMsg}
+            </div>
+          )}
+
           <div className="space-y-4">
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-1.5">Email</label>
@@ -141,14 +130,14 @@ export default function LoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="you@example.com"
-                className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-800 placeholder-gray-400 outline-none focus:ring-2 focus:ring-violet-300 focus:border-violet-400 transition-all"
+                className="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm text-gray-800 placeholder-gray-400 outline-none focus:ring-2 focus:ring-gray-200 focus:border-gray-400 transition-all"
               />
             </div>
 
             <div>
               <div className="flex items-center justify-between mb-1.5">
                 <label className="text-sm font-semibold text-gray-700">Password</label>
-                <a href="#" className="text-xs text-violet-600 hover:text-violet-700 font-medium transition-colors">
+                <a href="#" className="text-xs text-gray-400 hover:text-gray-700 font-medium transition-colors">
                   Forgot password?
                 </a>
               </div>
@@ -158,13 +147,13 @@ export default function LoginPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-800 placeholder-gray-400 outline-none focus:ring-2 focus:ring-violet-300 focus:border-violet-400 transition-all pr-11"
+                  className="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm text-gray-800 placeholder-gray-400 outline-none focus:ring-2 focus:ring-gray-200 focus:border-gray-400 transition-all pr-16"
                 />
                 <button
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors text-lg"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors text-xs font-medium"
                 >
-                  {showPassword ? "🙈" : "👁️"}
+                  {showPassword ? "Hide" : "Show"}
                 </button>
               </div>
             </div>
@@ -172,14 +161,9 @@ export default function LoginPage() {
             <button
               onClick={handleSubmit}
               disabled={loading}
-              className="w-full text-white font-bold text-sm py-3.5 rounded-xl transition-all mt-2 disabled:opacity-70"
-              style={{
-                background: loading
-                  ? "#a78bfa"
-                  : "linear-gradient(135deg, #7c3aed, #06b6d4)",
-              }}
+              className="w-full text-white font-bold text-sm py-3.5 rounded-lg transition-all mt-2 disabled:opacity-70 bg-gray-900 hover:bg-gray-800"
             >
-              {loading ? "Signing in..." : "Sign in →"}
+              {loading ? "Signing in..." : "Sign in"}
             </button>
           </div>
         </div>

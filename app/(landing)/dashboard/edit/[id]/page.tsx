@@ -1,9 +1,11 @@
 import React from 'react'
-import DashboardClient from '.';
+import EditArticleClient from './EditArticleClient';
 import { cookies } from 'next/headers';
 import { jwtVerify } from 'jose';
+import { redirect } from 'next/navigation';
 
-export default async function page () {
+export default async function EditArticlePage({ params }: { params: Promise<{ id: string }> }) {
+    const { id } = await params;
     const cookieStorage = await cookies()
     const token = cookieStorage.get('token')?.value
 
@@ -22,8 +24,11 @@ export default async function page () {
             };
         } catch (error) {
             console.error("Invalid or expired token")
-            user = null;
+            redirect('/login')
         }
+    } else {
+        redirect('/login')
     }
-    return <DashboardClient user={user ?? undefined}/>
+
+    return <EditArticleClient articleId={id} user={user} />
 }

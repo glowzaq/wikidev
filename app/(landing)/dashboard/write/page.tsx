@@ -1,9 +1,9 @@
 import React from 'react'
-import DashboardClient from '.';
+import WriteArticleClient from './WriteArticleClient';
 import { cookies } from 'next/headers';
 import { jwtVerify } from 'jose';
 
-export default async function page () {
+export default async function WriteArticlePage() {
     const cookieStorage = await cookies()
     const token = cookieStorage.get('token')?.value
 
@@ -25,5 +25,5 @@ export default async function page () {
             user = null;
         }
     }
-    return <DashboardClient user={user ?? undefined}/>
+    return <WriteArticleClient user={user ?? undefined} />
 }

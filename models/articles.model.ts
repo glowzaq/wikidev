@@ -17,6 +17,11 @@ const articleSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    authorId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Dev',
+        required: true
+    },
     createdAt: {
         type: Date,
         default: Date.now
@@ -24,7 +29,18 @@ const articleSchema = new mongoose.Schema({
     updatedAt: {
         type: Date,
         default: Date.now
-    }
+    },
+    likes: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Dev',
+        default: []
+    }],
+    comments: [{
+        userId: { type: String, required: true },
+        userName: { type: String, required: true },
+        text: { type: String, required: true },
+        createdAt: { type: Date, default: Date.now }
+    }]
 }, {
     timestamps: true
 });

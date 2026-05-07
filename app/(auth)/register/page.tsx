@@ -75,20 +75,13 @@ export default function RegisterPage() {
   return (
     <div className="min-h-screen bg-white flex">
       <div
-        className="hidden lg:flex lg:w-1/2 relative overflow-hidden flex-col justify-between p-12"
-        style={{
-          background: "linear-gradient(135deg, #0891b2 0%, #7c3aed 60%, #6d28d9 100%)",
-        }}
+        className="hidden lg:flex lg:w-1/2 relative overflow-hidden flex-col justify-between p-12 bg-gray-900"
       >
-        <div className="absolute top-0 right-0 w-80 h-80 rounded-full bg-white opacity-5 -translate-y-1/2 translate-x-1/2" />
-        <div className="absolute bottom-0 left-0 w-64 h-64 rounded-full bg-white opacity-5 translate-y-1/2 -translate-x-1/2" />
-        <div className="absolute top-1/3 right-1/4 w-72 h-72 rounded-full bg-violet-400 opacity-10 blur-3xl" />
-
         <div className="relative z-10">
           <Link href="/">
             <span className="font-display font-extrabold text-2xl text-white">
-              wiki<span className="text-cyan-300">dev</span>
-              <span className="inline-block w-2 h-2 rounded-full bg-cyan-300 ml-0.5 mb-1 align-middle" />
+              wiki<span className="text-gray-400">dev</span>
+              <span className="inline-block w-2 h-2 rounded-full bg-white ml-0.5 mb-1 align-middle" />
             </span>
           </Link>
         </div>
@@ -97,7 +90,7 @@ export default function RegisterPage() {
           <h2 className="font-display font-extrabold text-4xl text-white leading-tight">
             Join the dev<br />knowledge base.
           </h2>
-          <p className="text-white/70 text-lg leading-relaxed">
+          <p className="text-gray-400 text-lg leading-relaxed">
             Create your free account and start contributing to a growing library of developer knowledge.
           </p>
           <ul className="space-y-3">
@@ -107,9 +100,9 @@ export default function RegisterPage() {
               "Contribute and share your knowledge",
               "Get notified on new articles in your stack",
             ].map((perk) => (
-              <li key={perk} className="flex items-center gap-3 text-white/80 text-sm">
-                <span className="w-5 h-5 rounded-full bg-cyan-400/30 border border-cyan-300/40 flex items-center justify-center text-cyan-300 text-xs flex-shrink-0">
-                  ✓
+              <li key={perk} className="flex items-center gap-3 text-gray-400 text-sm">
+                <span className="w-5 h-5 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-white text-xs flex-shrink-0">
+                  &#10003;
                 </span>
                 {perk}
               </li>
@@ -117,7 +110,7 @@ export default function RegisterPage() {
           </ul>
         </div>
 
-        <div className="relative z-10 text-white/50 text-xs">
+        <div className="relative z-10 text-gray-500 text-xs">
           By joining, you agree to our Terms of Service and Privacy Policy.
         </div>
       </div>
@@ -127,11 +120,8 @@ export default function RegisterPage() {
           <div className="lg:hidden mb-10 text-center">
             <Link href="/">
               <span className="font-display font-extrabold text-2xl text-gray-900">
-                wiki
-                <span style={{ background: "linear-gradient(135deg, #7c3aed, #06b6d4)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-                  dev
-                </span>
-                <span className="inline-block w-2 h-2 rounded-full bg-violet-500 ml-0.5 mb-1 align-middle" />
+                wiki<span className="gradient-text">dev</span>
+                <span className="logo-dot" />
               </span>
             </Link>
           </div>
@@ -140,13 +130,13 @@ export default function RegisterPage() {
             <h1 className="font-display font-extrabold text-3xl text-gray-900 mb-2">Create account</h1>
             <p className="text-gray-500 text-sm">
               Already have an account?{" "}
-              <Link href="/login" className="text-violet-600 font-semibold hover:text-violet-700 transition-colors">
+              <Link href="/login" className="text-gray-900 font-semibold hover:underline transition-colors">
                 Sign in
               </Link>
             </p>
           </div>
 
-          <button className="w-full flex items-center justify-center gap-3 border border-gray-200 rounded-xl py-3 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors mb-6 shadow-sm">
+          <button className="w-full flex items-center justify-center gap-3 border border-gray-200 rounded-lg py-3 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors mb-6">
             <svg className="w-5 h-5" viewBox="0 0 24 24">
               <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
               <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
@@ -163,7 +153,7 @@ export default function RegisterPage() {
           </div>
 
           {errorMsg && (
-            <div className="mb-4 bg-red-50 border border-red-200 text-red-600 text-sm rounded-xl px-4 py-3">
+            <div className="mb-4 bg-red-50 border border-red-200 text-red-600 text-sm rounded-lg px-4 py-3">
               {errorMsg}
             </div>
           )}
@@ -173,29 +163,29 @@ export default function RegisterPage() {
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-1.5">First name</label>
                 <input type="text" value={form.firstName} onChange={update("firstName")} placeholder="John"
-                  className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-800 placeholder-gray-400 outline-none focus:ring-2 focus:ring-violet-300 focus:border-violet-400 transition-all" />
+                  className="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm text-gray-800 placeholder-gray-400 outline-none focus:ring-2 focus:ring-gray-200 focus:border-gray-400 transition-all" />
               </div>
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-1.5">Last name</label>
                 <input type="text" value={form.lastName} onChange={update("lastName")} placeholder="Doe"
-                  className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-800 placeholder-gray-400 outline-none focus:ring-2 focus:ring-violet-300 focus:border-violet-400 transition-all" />
+                  className="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm text-gray-800 placeholder-gray-400 outline-none focus:ring-2 focus:ring-gray-200 focus:border-gray-400 transition-all" />
               </div>
             </div>
 
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-1.5">Email</label>
               <input type="email" value={form.email} onChange={update("email")} placeholder="you@example.com"
-                className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-800 placeholder-gray-400 outline-none focus:ring-2 focus:ring-violet-300 focus:border-violet-400 transition-all" />
+                className="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm text-gray-800 placeholder-gray-400 outline-none focus:ring-2 focus:ring-gray-200 focus:border-gray-400 transition-all" />
             </div>
 
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-1.5">Password</label>
               <div className="relative">
                 <input type={showPassword ? "text" : "password"} value={form.password} onChange={update("password")} placeholder="Min. 8 characters"
-                  className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-800 placeholder-gray-400 outline-none focus:ring-2 focus:ring-violet-300 focus:border-violet-400 transition-all pr-11" />
+                  className="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm text-gray-800 placeholder-gray-400 outline-none focus:ring-2 focus:ring-gray-200 focus:border-gray-400 transition-all pr-16" />
                 <button onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors text-lg">
-                  {showPassword ? "🙈" : "👁️"}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors text-xs font-medium">
+                  {showPassword ? "Hide" : "Show"}
                 </button>
               </div>
               {form.password && (
@@ -213,16 +203,15 @@ export default function RegisterPage() {
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-1.5">Confirm password</label>
               <input type="password" value={form.confirm} onChange={update("confirm")} placeholder="••••••••"
-                className={`w-full border rounded-xl px-4 py-3 text-sm text-gray-800 placeholder-gray-400 outline-none focus:ring-2 transition-all ${form.confirm && form.confirm !== form.password ? "border-red-300 focus:ring-red-200" : "border-gray-200 focus:ring-violet-300 focus:border-violet-400"}`} />
+                className={`w-full border rounded-lg px-4 py-3 text-sm text-gray-800 placeholder-gray-400 outline-none focus:ring-2 transition-all ${form.confirm && form.confirm !== form.password ? "border-red-300 focus:ring-red-200" : "border-gray-200 focus:ring-gray-200 focus:border-gray-400"}`} />
               {form.confirm && form.confirm !== form.password && (
                 <p className="text-xs text-red-500 mt-1">Passwords do not match</p>
               )}
             </div>
 
             <button onClick={handleSubmit} disabled={loading}
-              className="w-full text-white font-bold text-sm py-3.5 rounded-xl transition-all mt-2 disabled:opacity-70"
-              style={{ background: loading ? "#a78bfa" : "linear-gradient(135deg, #7c3aed, #06b6d4)" }}>
-              {loading ? "Creating account..." : "Create account →"}
+              className="w-full text-white font-bold text-sm py-3.5 rounded-lg transition-all mt-2 disabled:opacity-70 bg-gray-900 hover:bg-gray-800">
+              {loading ? "Creating account..." : "Create account"}
             </button>
           </div>
         </div>

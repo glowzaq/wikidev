@@ -1,9 +1,11 @@
 import React from 'react'
-import DashboardClient from '.';
 import { cookies } from 'next/headers';
 import { jwtVerify } from 'jose';
+import ProfileClient from './ProfileClient';
 
-export default async function page () {
+export default async function ProfilePage({ params }: { params: Promise<{ id: string }> }) {
+    const { id } = await params;
+    
     const cookieStorage = await cookies()
     const token = cookieStorage.get('token')?.value
 
@@ -25,5 +27,6 @@ export default async function page () {
             user = null;
         }
     }
-    return <DashboardClient user={user ?? undefined}/>
+
+    return <ProfileClient profileId={id} currentUser={user ?? undefined} />
 }

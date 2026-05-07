@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import "./globals.css";
+import './global.css';
 import { Providers } from "./providers";
 import { Syne, DM_Sans } from "next/font/google";
 

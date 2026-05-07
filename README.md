@@ -1,36 +1,92 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🚀 WikiDev: The Developer Knowledge Base
 
-## Getting Started
+WikiDev is a high-performance, full-stack knowledge-sharing platform designed for developers. Built with **Next.js 16**, **React 19**, and a robust **GraphQL** backend, it empowers users to publish technical articles, engage with the community, and curate their own technical library.
 
-First, run the development server:
+## ✨ Core Features
+
+- **🔐 Custom JWT Auth:** Secure authentication using `jose` and `bcryptjs` with session management via HTTP-only cookies.
+- **📝 Advanced Article Editor:** Markdown-supported article creation with real-time preview and **input validation** (min/max length checks).
+- **👤 Author Profiles:** Dedicated public profile pages showcasing a developer's bio and their entire catalog of published works.
+- **🛡️ Admin Moderation:** A secure, high-privilege **Admin Console** for platform-wide content management and moderation.
+- **🔖 Smart Bookmarks:** Save technical guides for later with a personalized bookmarking system integrated into the dashboard.
+- **💬 Community Engagement:** Interactive features including **Likes** and **Nested Comments** on every article.
+- **📜 Dynamic Table of Contents:** Automatically generated, smooth-scrolling TOC for long-form technical documentation.
+- **🎨 Premium UI/UX:** A stunning, responsive design featuring **Glassmorphism**, smooth transitions, and a meticulously aligned dashboard layout.
+
+## 🛠️ Tech Stack
+
+### Frontend
+- **Framework:** Next.js 16 (App Router)
+- **Library:** React 19
+- **Styling:** Tailwind CSS 4 & Vanilla CSS
+- **Icons:** Lucide React
+- **Rendering:** React Markdown with GFM support
+
+### Backend
+- **API:** GraphQL with Apollo Server
+- **Client:** Apollo Client (React Hooks)
+- **Database:** MongoDB via Mongoose
+- **Security:** JWT (jose) & BcryptJS
+
+## 📁 Architecture
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+├── app/
+│   ├── (admin)/        # Admin-only Moderation Dashboard
+│   ├── (auth)/         # Login & Registration flows
+│   ├── (landing)/      # Core app (Dashboard, Articles, Profiles)
+│   ├── api/graphql/    # Unified GraphQL Endpoint
+│   └── shared/         # Reusable UI Components & Hooks
+├── lib/
+│   └── graphql/        # Schemas (TypeDefs), Resolvers, and Queries
+├── models/             # Mongoose Data Models (Article, Dev)
+└── public/             # Static Assets
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🚀 Getting Started
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 1. Prerequisites
+- Node.js v18.x or higher
+- MongoDB (Local or Atlas)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 2. Installation
+```bash
+git clone https://github.com/your-username/wiki-dev.git
+cd wiki-dev
+npm install
+```
 
-## Learn More
+### 3. Environment Setup
+Create a `.env` file in the root:
+```env
+MONGODB_URI=your_mongodb_uri
+JWT_SECRET=your_secret_key
+```
 
-To learn more about Next.js, take a look at the following resources:
+### 4. Run Development
+```bash
+npm run dev
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📊 Data Models
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Dev (User)
+- `firstName`, `lastName`, `email`, `password` (hashed)
+- `role`: (`user` | `admin`)
+- `bio`: Short professional summary
+- `bookmarks`: References to saved Articles
 
-## Deploy on Vercel
+### Article
+- `title`, `content` (Markdown)
+- `category`: (Frontend, Backend, DevOps, etc.)
+- `authorId`: Reference to the creator
+- `likes`: Array of user IDs
+- `comments`: Nested objects with `text`, `userName`, and `createdAt`
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🛡️ Moderation & Safety
+- **Input Sanitization:** Automatically trims and validates article length (Title: 5-100, Content: 20+).
+- **Access Control:** Server-side role verification for administrative actions.
+- **Scroll Margin:** Optimized for reading with `scroll-mt` headers to prevent overlap with sticky navigation.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+Built with ❤️ by the WikiDev Team.

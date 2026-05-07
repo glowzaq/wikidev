@@ -1,0 +1,32 @@
+import React from 'react'
+import BookmarksClient from './BookmarksClient';
+import { cookies } from 'next/headers';
+import { jwtVerify } from 'jose';
+import { redirect } from 'next/navigation';
+
+export default async function BookmarksPage() {
+    const cookieStorage = await cookies()
+    const token = cookieStorage.get('token')?.value
+
+    if (!token) {
+        redirect('/login')
+    }
+
+    let user = null
+    try {
+        const secret = new TextEncoder().encode(process.env.JWT_SECRET);
+        const { payload } = await jwtVerify(token, secret);
+        user = {
+            id: payload.id as string,
+            email: payload.email as string,
+            firstName: payload.firstName as string,
+            lastName: payload.lastName as string,
+            role: payload.role as string
+        };
+    } catch (error) {
+        console.error("Invalid or expired token")
+        redirect('/login')
+    }
+
+    return <BookmarksClient user={user} />
+}

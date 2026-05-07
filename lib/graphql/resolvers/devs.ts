@@ -5,8 +5,8 @@ import jwt from "jsonwebtoken"
 
 export const devResolver = {
     Query: {
-            devs: async ()=> await Dev.find({}),
-            dev: async (_:any, { id }: {id: string})=> await Dev.findById(id),
+            devs: async ()=> await Dev.find({}).populate("bookmarks"),
+            dev: async (_:any, { id }: {id: string})=> await Dev.findById(id).populate("bookmarks"),
         },
     Mutation: {
         createDev: async (_:any, {firstName, lastName, email, password}: devType)=> {
@@ -34,15 +34,62 @@ export const devResolver = {
                 throw new Error('Invalid email or password')
             }
             const token = jwt.sign(
-                { id: dev._id, email: dev.email },
+                { id: dev._id, email: dev.email, firstName: dev.firstName, lastName: dev.lastName, role: dev.role },
                 process.env.JWT_SECRET as string,
-                { expiresIn: process.env.JWT_EXPIRES_IN || '1d' }
+                { expiresIn: '1d' }
             );
             return {
                 token,
                 dev
             }
+        },
+        bookmarkArticle: async (_:any, { devId, articleId }: { devId: string, articleId: string }) => {
+            const dev = await Dev.findByIdAndUpdate(
+                devId,
+                { $addToSet: { bookmarks: articleId } },
+                { returnDocument: 'after' }
+            ).populate("bookmarks");
+            if (!dev) throw new Error("Dev not found");
+            return dev;
+        },
+        unbookmarkArticle: async (_:any, { devId, articleId }: { devId: string, articleId: string }) => {
+            const dev = await Dev.findByIdAndUpdate(
+                devId,
+                { $pull: { bookmarks: articleId } },
+                { returnDocument: 'after' }
+            ).populate("bookmarks");
+            if (!dev) throw new Error("Dev not found");
+            return dev;
+        },
+        updateDev: async (_: any, { id, firstName, lastName, email, bio }: { id: string, firstName?: string, lastName?: string, email?: string, bio?: string }) => {
+            if (email) {
+                const existing = await Dev.findOne({ email, _id: { $ne: id } });
+                if (existing) throw new Error("Email already in use");
+            }
+            const dev = await Dev.findByIdAndUpdate(
+                id,
+                { firstName, lastName, email, bio },
+                { new: true }
+            );
+            if (!dev) throw new Error("Dev not found");
+            return dev;
+        },
+        updatePassword: async (_: any, { id, currentPassword, newPassword }: { id: string, currentPassword: string, newPassword: string }) => {
+            const dev = await Dev.findById(id);
+            if (!dev) throw new Error("Dev not found");
+            
+            const isMatch = await bcrypt.compare(currentPassword, dev.password);
+            if (!isMatch) throw new Error("Current password incorrect");
+            
+            const hashed = await bcrypt.hash(newPassword, 12);
+            dev.password = hashed;
+            await dev.save();
+            return true;
+        },
+        deleteDev: async (_: any, { id }: { id: string }) => {
+            const dev = await Dev.findByIdAndDelete(id);
+            if (!dev) throw new Error("Dev not found");
+            return true;
         }
     }
-    }
-
+}

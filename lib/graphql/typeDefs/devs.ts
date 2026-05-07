@@ -7,6 +7,9 @@ export const devsTypeDefs = gql`
     lastName: String!
     email: String!
     password: String!
+    role: String!
+    bio: String
+    bookmarks: [Article]
   }
 
   type AuthPayload {
@@ -22,7 +25,10 @@ export const devsTypeDefs = gql`
   type Mutation {
     createDev(firstName: String!, lastName: String!, email: String!, password: String!): Dev!
     loginDev(email: String!, password: String!): AuthPayload!
-    updateDev(id: ID!, firstName: String, email: String): Dev
+    updateDev(id: ID!, firstName: String, lastName: String, email: String, bio: String): Dev!
+    updatePassword(id: ID!, currentPassword: String!, newPassword: String!): Boolean!
     deleteDev(id: ID!): Boolean!
+    bookmarkArticle(devId: ID!, articleId: ID!): Dev!
+    unbookmarkArticle(devId: ID!, articleId: ID!): Dev!
   }
 `;
