@@ -1,6 +1,6 @@
 'use client'
 
-import { User, Article, ArticlesData, DevData, UserArticlesData } from "@/app/shared/type";
+import { User, Article, DevData, UserArticlesByIdData } from "@/app/shared/type";
 import { GET_USER_ARTICLES_BY_ID } from "@/lib/graphql/queries/article.queries";
 import { GET_DEV } from "@/lib/graphql/queries/dev.queries";
 import { useQuery } from "@apollo/client/react";

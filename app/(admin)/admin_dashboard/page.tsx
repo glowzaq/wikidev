@@ -27,7 +27,8 @@ export default async function AdminPage() {
             lastName: payload.lastName as string,
             role: payload.role as string
         };
-    } catch (error) {
+    } catch {
+        (await cookies()).delete('token');
         redirect('/login');
     }
 

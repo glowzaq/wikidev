@@ -4,10 +4,12 @@ import { cookies } from 'next/headers';
 import { jwtVerify } from 'jose';
 
 export default async function ArticlesPage() {
-    const cookieStorage = await cookies()
-    const token = cookieStorage.get('token')?.value
+    const cookieStorage = await cookies();
+    const token = cookieStorage.get('token')?.value;
 
-    let user = null
+    // Articles is a public page — user context is optional
+    // But if a token exists and is invalid, clear it silently
+    let user = null;
 
     if (token) {
         try {
@@ -18,12 +20,13 @@ export default async function ArticlesPage() {
                 email: payload.email as string,
                 firstName: payload.firstName as string,
                 lastName: payload.lastName as string,
-                role: payload.role as string
+                role: payload.role as string,
             };
-        } catch (error) {
-            console.error("Invalid or expired token")
-            user = null;
+        } catch {
+            // Expired token — clear it so the user appears logged out
+            cookieStorage.delete('token');
         }
     }
-    return <ArticlesClient user={user ?? undefined} />
+
+    return <ArticlesClient user={user ?? undefined} />;
 }

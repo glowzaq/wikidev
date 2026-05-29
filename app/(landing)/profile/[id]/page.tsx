@@ -5,11 +5,13 @@ import ProfileClient from './ProfileClient';
 
 export default async function ProfilePage({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;
-    
-    const cookieStorage = await cookies()
-    const token = cookieStorage.get('token')?.value
 
-    let user = null
+    const cookieStorage = await cookies();
+    const token = cookieStorage.get('token')?.value;
+
+    // Profile is public — user context is optional
+    // But if a token exists and is invalid, clear it silently
+    let user = null;
 
     if (token) {
         try {
@@ -20,13 +22,13 @@ export default async function ProfilePage({ params }: { params: Promise<{ id: st
                 email: payload.email as string,
                 firstName: payload.firstName as string,
                 lastName: payload.lastName as string,
-                role: payload.role as string
+                role: payload.role as string,
             };
-        } catch (error) {
-            console.error("Invalid or expired token")
-            user = null;
+        } catch {
+            // Expired token — clear it so the user appears logged out
+            cookieStorage.delete('token');
         }
     }
 
-    return <ProfileClient profileId={id} currentUser={user ?? undefined} />
+    return <ProfileClient profileId={id} currentUser={user ?? undefined} />;
 }

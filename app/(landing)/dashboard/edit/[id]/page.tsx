@@ -6,29 +6,26 @@ import { redirect } from 'next/navigation';
 
 export default async function EditArticlePage({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;
-    const cookieStorage = await cookies()
-    const token = cookieStorage.get('token')?.value
+    const cookieStorage = await cookies();
+    const token = cookieStorage.get('token')?.value;
 
-    let user = null
-
-    if (token) {
-        try {
-            const secret = new TextEncoder().encode(process.env.JWT_SECRET);
-            const { payload } = await jwtVerify(token, secret);
-            user = {
-                id: payload.id as string,
-                email: payload.email as string,
-                firstName: payload.firstName as string,
-                lastName: payload.lastName as string,
-                role: payload.role as string
-            };
-        } catch (error) {
-            console.error("Invalid or expired token")
-            redirect('/login')
-        }
-    } else {
-        redirect('/login')
+    if (!token) {
+        redirect('/login');
     }
 
-    return <EditArticleClient articleId={id} user={user} />
+    try {
+        const secret = new TextEncoder().encode(process.env.JWT_SECRET);
+        const { payload } = await jwtVerify(token, secret);
+        const user = {
+            id: payload.id as string,
+            email: payload.email as string,
+            firstName: payload.firstName as string,
+            lastName: payload.lastName as string,
+            role: payload.role as string,
+        };
+        return <EditArticleClient articleId={id} user={user} />;
+    } catch {
+        cookieStorage.delete('token');
+        redirect('/login');
+    }
 }

@@ -10,7 +10,8 @@ export const articleResolver = {
         userArticles: async (_: any, { author }: { author: string }) => await Article.find({ author }).sort({ createdAt: -1 }),
         userArticlesById: async (_: any, { authorId }: { authorId: string }) => {
             return await Article.find({ authorId: new mongoose.Types.ObjectId(authorId) }).sort({ createdAt: -1 });
-        }
+        },
+        articlesCount: async () => await Article.countDocuments(),
     },
     Mutation: {
         createArticle: async (_: any, { title, content, category, author, authorId }: articleType) => {

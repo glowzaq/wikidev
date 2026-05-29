@@ -56,9 +56,9 @@ export default async function ArticleDetailPage({ params }: { params: Promise<{ 
                 lastName: payload.lastName as string,
                 role: payload.role as string
             };
-        } catch (error) {
-            console.error("Invalid or expired token")
-            user = null;
+        } catch {
+            // Expired token — clear it silently, article is still publicly viewable
+            cookieStorage.delete('token');
         }
     }
 

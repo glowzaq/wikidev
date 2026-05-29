@@ -24,7 +24,6 @@ export default function DashboardClient({ user }: { user?: User }) {
         { label: "Settings", href: "/settings", active: false },
     ];
 
-    // Add Admin Dashboard if user is admin
     if (user?.role === "admin") {
         navItems.push({ label: "Admin Console", href: "/admin_dashboard", active: false });
     }
@@ -110,7 +109,6 @@ export default function DashboardClient({ user }: { user?: User }) {
                     <Link href="/">
                         <span className="font-display font-extrabold text-xl text-gray-900">
                             wiki<span className="gradient-text">dev</span>
-                            <span className="logo-dot" />
                         </span>
                     </Link>
                 </div>

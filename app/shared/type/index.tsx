@@ -69,3 +69,25 @@ export interface UserArticlesData {
 export interface UserArticlesByIdData {
     userArticlesById: Article[];
 }
+
+export interface StatsData {
+    articlesCount: number;
+    devsCount: number;
+}
+
+export interface AuthPayload {
+    token: string;
+    dev: User;
+}
+
+export interface GoogleCallbackData {
+    googleCallback: AuthPayload;
+}
+
+export interface LoginDevData {
+    loginDev: AuthPayload;
+}
+
+export interface GoogleAuthUrlData {
+    googleAuthUrl: string;
+}

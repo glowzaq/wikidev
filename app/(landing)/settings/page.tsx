@@ -5,30 +5,27 @@ import { jwtVerify } from 'jose';
 import { redirect } from 'next/navigation';
 
 export default async function SettingsPage() {
-    const cookieStorage = await cookies()
-    const token = cookieStorage.get('token')?.value
+    const cookieStorage = await cookies();
+    const token = cookieStorage.get('token')?.value;
 
-    let user = null
-
-    if (token) {
-        try {
-            const secret = new TextEncoder().encode(process.env.JWT_SECRET);
-            const { payload } = await jwtVerify(token, secret);
-            user = {
-                id: payload.id as string,
-                email: payload.email as string,
-                firstName: payload.firstName as string,
-                lastName: payload.lastName as string,
-                role: payload.role as string,
-                bio: payload.bio as string
-            };
-        } catch (error) {
-            console.error("Invalid or expired token")
-            redirect('/login')
-        }
-    } else {
-        redirect('/login')
+    if (!token) {
+        redirect('/login');
     }
 
-    return <SettingsClient user={user} />
+    try {
+        const secret = new TextEncoder().encode(process.env.JWT_SECRET);
+        const { payload } = await jwtVerify(token, secret);
+        const user = {
+            id: payload.id as string,
+            email: payload.email as string,
+            firstName: payload.firstName as string,
+            lastName: payload.lastName as string,
+            role: payload.role as string,
+            bio: payload.bio as string,
+        };
+        return <SettingsClient user={user} />;
+    } catch {
+        cookieStorage.delete('token');
+        redirect('/login');
+    }
 }

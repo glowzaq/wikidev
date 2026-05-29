@@ -28,3 +28,10 @@ export const GET_DEV = gql`
     }
   }
 `;
+
+export const GET_STATS = gql`
+  query GetStats {
+    articlesCount
+    devsCount
+  }
+`;

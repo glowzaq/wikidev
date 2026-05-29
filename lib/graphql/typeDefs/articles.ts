@@ -27,6 +27,7 @@ export const articlesTypeDefs = gql`
     article(id: ID!): Article
     userArticles(author: String!): [Article!]!
     userArticlesById(authorId: ID!): [Article!]!
+    articlesCount: Int!
   }
 
   extend type Mutation {

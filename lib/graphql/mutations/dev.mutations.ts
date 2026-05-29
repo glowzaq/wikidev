@@ -39,3 +39,17 @@ export const LOGIN_DEV = gql`
     }
   }
 `; 
+
+export const GOOGLE_CALLBACK = gql`
+  mutation GoogleCallback($code: String!) {
+    googleCallback(code: $code) {
+      token
+      dev {
+        id
+        firstName
+        lastName
+        email
+      }
+    }
+  }
+`;
