@@ -101,8 +101,8 @@ export default function DashboardClient({ user }: { user?: User }) {
 
             {/* Sidebar */}
             <aside
-                className={`fixed top-0 left-0 h-screen w-60 bg-white border-r border-gray-200 z-30 flex flex-col transition-transform duration-300 ${sidebarOpen ? "translate-x-0" : "-translate-x-full"
-                    } lg:translate-x-0 lg:static lg:z-auto`}
+                className={`fixed top-0 left-0 h-screen w-56 max-w-[75vw] bg-white border-r border-gray-200 z-30 flex flex-col transition-transform duration-300 ${sidebarOpen ? "translate-x-0" : "-translate-x-full"
+                    } lg:translate-x-0 lg:static lg:z-auto lg:w-60 lg:max-w-none`}
             >
                 {/* Logo */}
                 <div className="px-6 border-b border-gray-200 flex-shrink-0 flex items-center h-[73px]">
@@ -122,6 +122,7 @@ export default function DashboardClient({ user }: { user?: User }) {
                         <Link
                             key={item.label}
                             href={item.href}
+                            onClick={() => setSidebarOpen(false)}
                             className={`nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium ${item.active
                                 ? "bg-gray-100 text-gray-900"
                                 : "text-gray-500 hover:bg-gray-50 hover:text-gray-800"
@@ -143,7 +144,10 @@ export default function DashboardClient({ user }: { user?: User }) {
                             </p>
                             {selectedCategory && (
                                 <button
-                                    onClick={() => setSelectedCategory(null)}
+                                    onClick={() => {
+                                        setSelectedCategory(null);
+                                        setSidebarOpen(false);
+                                    }}
                                     className="text-[10px] font-bold text-gray-400 hover:text-gray-900 transition-colors uppercase"
                                 >
                                     Clear
@@ -154,7 +158,10 @@ export default function DashboardClient({ user }: { user?: User }) {
                             {categories.map((cat) => (
                                 <button
                                     key={cat.label}
-                                    onClick={() => handleCategoryClick(cat.label)}
+                                    onClick={() => {
+                                        handleCategoryClick(cat.label);
+                                        setSidebarOpen(false);
+                                    }}
                                     className={`nav-item w-full flex items-center px-3 py-2 rounded-lg text-sm transition-all ${selectedCategory === cat.label
                                         ? "bg-indigo-50 text-indigo-600 font-bold border-l-4 border-indigo-500 rounded-l-none"
                                         : "text-gray-500 hover:bg-gray-50 hover:text-indigo-600"
