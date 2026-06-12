@@ -40,12 +40,11 @@ export default function AdminClient({ user }: { user: User }) {
                     <div className="bg-amber-500 p-1.5 rounded-lg">
                         <Shield size={20} className="text-gray-900" />
                     </div>
-                    <h1 className="font-display font-bold text-xl">WikiDev <span className="text-amber-500">Moderation</span></h1>
                 </div>
 
                 <div className="flex items-center gap-6">
                     <Link href="/dashboard" className="text-sm font-medium text-gray-400 hover:text-white transition-colors">
-                        Back to Wiki
+                        Wiki
                     </Link>
                     <div className="flex items-center gap-2 border-l border-gray-700 pl-6">
                         <div className="w-7 h-7 rounded-full flex items-center justify-center text-white text-xs font-bold uppercase bg-indigo-600">
@@ -58,7 +57,7 @@ export default function AdminClient({ user }: { user: User }) {
                 </div>
             </header>
 
-            <main className="max-w-6xl mx-auto px-8 py-10">
+            <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
                 {/* Stats */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
                     <div className="bg-gray-800 border border-gray-700 p-6 rounded-2xl">
@@ -90,11 +89,65 @@ export default function AdminClient({ user }: { user: User }) {
 
                 {/* Moderation Table */}
                 <div className="bg-gray-800 border border-gray-700 rounded-2xl overflow-hidden">
-                    <div className="px-6 py-4 border-b border-gray-700 flex items-center justify-between bg-gray-800/50">
+                    <div className="px-4 sm:px-6 py-4 border-b border-gray-700 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 bg-gray-800/50">
                         <h2 className="font-bold text-lg">Article Moderation</h2>
-                        <span className="text-xs text-gray-500">Manage all content across the platform</span>
+                        <span className="text-xs text-gray-500">
+                            Manage all content across the platform
+                        </span>
                     </div>
-                    <div className="overflow-x-auto">
+
+                    {/* Mobile cards */}
+                    <div className="block md:hidden divide-y divide-gray-700/50">
+                        {articles.map((article) => (
+                            <div key={article.id} className="p-4 space-y-4">
+                                <div>
+                                    <p className="font-bold text-gray-100 leading-snug break-words">
+                                        {article.title}
+                                    </p>
+                                    <span className="inline-block mt-2 text-xs px-2 py-0.5 rounded bg-gray-700 text-gray-400 font-medium">
+                                        {article.category}
+                                    </span>
+                                </div>
+
+                                <div className="flex items-center gap-3">
+                                    <div className="w-8 h-8 shrink-0 rounded-full bg-indigo-500/20 text-indigo-400 flex items-center justify-center text-[10px] font-bold">
+                                        {article.author?.split(" ").map(n => n[0]).join("")}
+                                    </div>
+                                    <span className="text-sm text-gray-300 break-words">
+                                        {article.author}
+                                    </span>
+                                </div>
+
+                                <div className="flex items-center justify-between text-xs text-gray-400">
+                                    <div className="flex gap-4">
+                                        <span>❤️ {article.likes?.length || 0}</span>
+                                        <span>💬 {article.comments?.length || 0}</span>
+                                    </div>
+
+                                    <div className="flex items-center gap-2">
+                                        <Link
+                                            href={`/articles/${article.id}`}
+                                            className="p-2 bg-gray-700 text-gray-400 hover:text-white rounded-lg transition-colors"
+                                            title="View Article"
+                                        >
+                                            <ExternalLink size={16} />
+                                        </Link>
+
+                                        <button
+                                            onClick={() => handleDelete(article.id, article.title)}
+                                            className="p-2 bg-red-500/10 text-red-400 hover:bg-red-500 hover:text-white rounded-lg transition-all"
+                                            title="Delete Article"
+                                        >
+                                            <Trash2 size={16} />
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
+                    {/* Desktop table */}
+                    <div className="hidden md:block overflow-x-auto">
                         <table className="w-full text-left">
                             <thead>
                                 <tr className="text-xs font-bold text-gray-500 uppercase tracking-wider border-b border-gray-700/50">
@@ -104,37 +157,48 @@ export default function AdminClient({ user }: { user: User }) {
                                     <th className="px-6 py-4 font-bold text-right">Actions</th>
                                 </tr>
                             </thead>
+
                             <tbody className="divide-y divide-gray-700/50">
                                 {articles.map((article) => (
                                     <tr key={article.id} className="hover:bg-gray-700/30 transition-colors group">
-                                        <td className="px-6 py-5">
-                                            <p className="font-bold text-gray-100 mb-1">{article.title}</p>
-                                            <span className="text-xs px-2 py-0.5 rounded bg-gray-700 text-gray-400 font-medium">{article.category}</span>
+                                        <td className="px-6 py-5 max-w-[420px]">
+                                            <p className="font-bold text-gray-100 mb-1 break-words">
+                                                {article.title}
+                                            </p>
+                                            <span className="text-xs px-2 py-0.5 rounded bg-gray-700 text-gray-400 font-medium">
+                                                {article.category}
+                                            </span>
                                         </td>
+
                                         <td className="px-6 py-5">
                                             <div className="flex items-center gap-3">
                                                 <div className="w-7 h-7 rounded-full bg-indigo-500/20 text-indigo-400 flex items-center justify-center text-[10px] font-bold">
                                                     {article.author?.split(" ").map(n => n[0]).join("")}
                                                 </div>
-                                                <span className="text-sm text-gray-300">{article.author}</span>
+                                                <span className="text-sm text-gray-300">
+                                                    {article.author}
+                                                </span>
                                             </div>
                                         </td>
+
                                         <td className="px-6 py-5">
                                             <div className="flex items-center justify-center gap-4 text-xs text-gray-500 font-medium">
                                                 <span title="Likes">❤️ {article.likes?.length || 0}</span>
                                                 <span title="Comments">💬 {article.comments?.length || 0}</span>
                                             </div>
                                         </td>
+
                                         <td className="px-6 py-5 text-right">
-                                            <div className="flex items-center justify-end gap-3 opacity-0 group-hover:opacity-100 transition-opacity">
-                                                <Link 
+                                            <div className="flex items-center justify-end gap-3 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity">
+                                                <Link
                                                     href={`/articles/${article.id}`}
                                                     className="p-2 bg-gray-700 text-gray-400 hover:text-white rounded-lg transition-colors"
                                                     title="View Article"
                                                 >
                                                     <ExternalLink size={16} />
                                                 </Link>
-                                                <button 
+
+                                                <button
                                                     onClick={() => handleDelete(article.id, article.title)}
                                                     className="p-2 bg-red-500/10 text-red-400 hover:bg-red-500 hover:text-white rounded-lg transition-all"
                                                     title="Delete Article"

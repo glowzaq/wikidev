@@ -1,6 +1,5 @@
 'use client'
-
-import { useEffect, useState } from "react";
+import { extractHeadings } from "@/lib/extractHeadings";
 
 interface Heading {
     text: string;
@@ -9,28 +8,7 @@ interface Heading {
 }
 
 export default function TableOfContents({ content }: { content: string }) {
-    const [headings, setHeadings] = useState<Heading[]>([]);
-
-    useEffect(() => {
-        const lines = content.split('\n');
-        const extractedHeadings: Heading[] = [];
-        
-        lines.forEach(line => {
-            const match = line.match(/^(#{1,3})\s+(.+)$/);
-            if (match) {
-                const level = match[1].length;
-                const text = match[2].replace(/[*_~`]/g, ''); // Remove markdown formatting from TOC text
-                const id = text
-                    .toLowerCase()
-                    .replace(/[^\w\s-]/g, '')
-                    .replace(/\s+/g, '-');
-                
-                extractedHeadings.push({ text, level, id });
-            }
-        });
-        
-        setHeadings(extractedHeadings);
-    }, [content]);
+    const headings = extractHeadings(content);
 
     if (headings.length === 0) return null;
 

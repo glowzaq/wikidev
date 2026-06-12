@@ -94,24 +94,34 @@ export default function WikiDevLanding() {
             : "bg-transparent"
           }`}
       >
-        <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-          <Link href="/" className="font-display font-extrabold text-xl text-gray-900">
-            wiki<span className="badge-pill font-bold">dev</span>
-            {/* <span className="logo-dot" /> */}
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+          <Link href="/" className="flex items-center gap-2 group">
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-600 to-violet-600 flex items-center justify-center shadow-md transition-transform duration-200 group-hover:scale-105">
+              <span className="text-white font-black text-lg">&lt;/&gt;</span>
+            </div>
+
+            <div className="flex flex-col leading-none">
+              <span className="font-black text-xl tracking-tight text-gray-900">
+                wiki<span className="text-indigo-600">dev</span>
+              </span>
+              <span className="hidden sm:block text-[9px] uppercase tracking-[0.2em] text-gray-400 font-semibold">
+                Developer Wiki
+              </span>
+            </div>
           </Link>
           <div className="hidden md:flex items-center gap-8 text-sm text-gray-500 font-medium">
             <a href="#features" className="hover:text-gray-900 transition-colors">Features</a>
             <a href="#categories" className="hover:text-gray-900 transition-colors">Categories</a>
             <a href="#cta" className="hover:text-gray-900 transition-colors">Contribute</a>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             <Link href="/login">
-              <button className="text-sm text-gray-600 font-medium hover:text-gray-900 transition-colors px-3 py-1.5 cursor-pointer">
+              <button className="text-xs sm:text-sm text-gray-600 font-medium hover:text-gray-900 transition-colors px-2 sm:px-3 py-1.5 cursor-pointer">
                 Sign in
               </button>
             </Link>
             <Link href="/register">
-              <button className="btn-primary text-white text-sm font-semibold px-5 py-2 rounded-lg cursor-pointer">
+              <button className="btn-primary text-white text-xs sm:text-sm font-semibold px-3 sm:px-5 py-2 rounded-lg cursor-pointer">
                 Get Started
               </button>
             </Link>
@@ -132,9 +142,9 @@ export default function WikiDevLanding() {
 
           {/* Heading */}
           <h1
-            className={`fade-up delay-1 ${visible ? "visible" : ""} font-display font-extrabold text-4xl md:text-7xl text-gray-900 leading-tight mb-6`}
+            className={`fade-up delay-1 ${visible ? "visible" : ""} font-display font-extrabold text-4xl sm:text-5xl md:text-7xl text-gray-900 leading-tight mb-6`}
           >
-            The wiki built{" "}
+            The wiki. built{" "}
             <span className="underline decoration-gray-300 decoration-2 underline-offset-8">
               for developers
             </span>{" "}
@@ -283,9 +293,20 @@ export default function WikiDevLanding() {
       {/* Footer */}
       <footer className="border-t border-gray-100 py-10 px-6">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="font-display font-bold text-lg text-gray-900">
-            wiki<span className="badge-pill">dev</span>
-          </div>
+          <Link href="/" className="flex items-center gap-2">
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-600 to-violet-600 flex items-center justify-center shadow-sm">
+              <span className="text-white font-black text-sm">&lt;/&gt;</span>
+            </div>
+
+            <div className="flex flex-col leading-none">
+              <span className="font-black text-lg tracking-tight text-gray-900">
+                wiki<span className="text-indigo-600">dev</span>
+              </span>
+              <span className="text-[8px] uppercase tracking-[0.18em] text-gray-400 font-semibold">
+                Developer Wiki
+              </span>
+            </div>
+          </Link>
           <p className="text-sm text-gray-400">
             &copy; {new Date().getFullYear()} WikiDev. Built by devs, for devs.
           </p>

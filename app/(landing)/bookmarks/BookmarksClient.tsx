@@ -36,40 +36,48 @@ export default function BookmarksClient({ user }: { user: User }) {
     };
 
     return (
-        <div className="min-h-screen bg-gray-50">
-            {/* Top bar */}
-            <header className="sticky top-0 z-10 flex flex-col gap-4 border-b border-gray-200 bg-white px-4 py-4 sm:px-6 md:flex-row md:items-center md:justify-between">
-                <div className="flex min-w-0 flex-wrap items-center gap-3">
-                    <Link href="/dashboard" className="text-sm font-medium text-gray-500 transition-colors hover:text-gray-900">
-                        &larr; Dashboard
-                    </Link>
-
-                    <div className="hidden h-5 w-px bg-gray-200 sm:block" />
-
-                    <h1 className="font-display truncate text-lg font-bold text-gray-900 sm:text-xl">
-                        Bookmarks
-                    </h1>
-                </div>
-
-                <div className="flex w-full flex-col gap-3 sm:flex-row sm:items-center sm:justify-between md:w-auto md:justify-end">
-                    <div className="flex items-center gap-2">
-                        <div className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full bg-indigo-600 text-xs font-bold uppercase text-white shadow-sm">
-                            {user.firstName?.[0]}{user.lastName?.[0]}
+            <div className="min-h-screen bg-gray-50">
+                <nav className="bg-white border-b border-gray-200 px-4 sm:px-6 sticky top-0 z-10">
+                    <div className="flex items-center justify-between h-[73px]">
+                        {/* Left */}
+                        <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+                            <Link
+                                href="/dashboard"
+                                className="text-sm text-gray-500 hover:text-indigo-600 transition-colors font-medium whitespace-nowrap"
+                            >
+                                &larr; <span className="hidden sm:inline">Dashboard</span>
+                            </Link>
+                            <div className="w-px h-5 bg-gray-200 flex-shrink-0" />
+                            <h1 className="font-display font-bold text-lg sm:text-xl text-gray-900 truncate">
+                                Bookmarks
+                            </h1>
                         </div>
 
-                        <button
-                            onClick={handleLogout}
-                            className="cursor-pointer text-sm font-medium text-gray-500 transition-colors hover:text-indigo-600"
-                        >
-                            Log out
-                        </button>
+                        {/* Right */}
+                        <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+                            {user && (
+                                <div className="flex items-center gap-2">
+                                    <div className="w-7 h-7 rounded-full flex items-center justify-center text-white text-xs font-bold uppercase bg-indigo-600 shadow-sm flex-shrink-0">
+                                        {user.firstName?.[0]}{user.lastName?.[0]}
+                                    </div>
+                                    <button
+                                        onClick={handleLogout}
+                                        className="hidden sm:block text-sm text-gray-500 hover:text-indigo-600 transition-colors font-medium cursor-pointer"
+                                    >
+                                        Log out
+                                    </button>
+                                </div>
+                            )}
+                            <Link
+                                href="/dashboard/write"
+                                className="bg-indigo-600 text-white text-xs sm:text-sm font-semibold px-3 sm:px-4 py-2 rounded-lg hover:bg-indigo-700 shadow-sm transition-all whitespace-nowrap"
+                            >
+                                <span className="sm:hidden">Write</span>
+                                <span className="hidden sm:inline">Write Article</span>
+                            </Link>
+                        </div>
                     </div>
-
-                    <Link href="/dashboard/write" className="w-full rounded-lg bg-indigo-600 px-4 py-2 text-center text-sm font-semibold text-white shadow-sm transition-all hover:bg-indigo-700 sm:w-auto">
-                        Write Article
-                    </Link>
-                </div>
-            </header>
+                </nav>
 
             <main className="mx-auto max-w-4xl px-4 py-8 sm:px-6 sm:py-10">
                 <div className="mb-6 sm:mb-8">

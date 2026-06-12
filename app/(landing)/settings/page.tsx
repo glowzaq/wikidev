@@ -4,6 +4,7 @@ import { cookies } from 'next/headers';
 import { jwtVerify } from 'jose';
 import { redirect } from 'next/navigation';
 
+export const dynamic = 'force-dynamic';
 export default async function SettingsPage() {
     const cookieStorage = await cookies();
     const token = cookieStorage.get('token')?.value;

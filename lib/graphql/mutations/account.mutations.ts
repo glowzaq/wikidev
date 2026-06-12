@@ -8,6 +8,7 @@ export const UPDATE_PROFILE = gql`
       lastName
       email
       bio
+      token
     }
   }
 `;

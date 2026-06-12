@@ -123,7 +123,23 @@ export const devResolver = {
                 { new: true }
             );
             if (!dev) throw new Error("Dev not found");
-            return dev;
+
+            // Generate a new JWT token with updated user data
+            const token = jwt.sign(
+                { id: dev._id, email: dev.email, firstName: dev.firstName, lastName: dev.lastName, role: dev.role, bio: dev.bio },
+                process.env.JWT_SECRET as string,
+                { expiresIn: '1d' }
+            );
+
+            return {
+                id: dev._id.toString(),
+                firstName: dev.firstName,
+                lastName: dev.lastName,
+                email: dev.email,
+                bio: dev.bio || "",
+                role: dev.role,
+                token
+            };
         },
 
         updatePassword: async (_: any, { id, currentPassword, newPassword }: { id: string, currentPassword: string, newPassword: string }) => {

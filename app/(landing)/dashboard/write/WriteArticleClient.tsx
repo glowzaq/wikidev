@@ -27,7 +27,7 @@ export default function WriteArticleClient({ user }: { user?: User }) {
             setTitle("");
             setContent("");
             setCategory("");
-            setTimeout(() => router.push("/dashboard"), 1500);
+            setTimeout(() => router.push("/dashboard"), 1000);
         },
         onError: (error) => {
             setErrorMsg(error.message);
@@ -85,13 +85,12 @@ export default function WriteArticleClient({ user }: { user?: User }) {
                         href="/dashboard"
                         className="text-sm text-gray-500 hover:text-gray-900 transition-colors font-medium"
                     >
-                        &larr; Back
+                        &larr; <span className="hidden sm:inline">Back</span>
                     </Link>
-                    <div className="w-px h-5 bg-gray-200" />
-                    <h1 className="font-display font-bold text-lg text-gray-900">Write Article</h1>
+                    <h1 className="font-display font-bold text-md text-gray-900">Write</h1>
                 </div>
 
-                <div className="flex items-center gap-6">
+                <div className="flex items-center gap-5">
                     <div className="flex bg-gray-100 p-1 rounded-lg">
                         <button
                             onClick={() => setIsPreview(false)}

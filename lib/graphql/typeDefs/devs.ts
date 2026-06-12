@@ -17,6 +17,18 @@ export const devsTypeDefs = gql`
     dev: Dev!
   }
 
+  type UpdateDevPayload {
+    id: ID!
+    firstName: String!
+    lastName: String!
+    email: String!
+    password: String!
+    role: String!
+    bio: String
+    bookmarks: [Article]
+    token: String!
+  }
+
   type Query {
     devs: [Dev!]!
     dev(id: ID!): Dev
@@ -28,7 +40,7 @@ export const devsTypeDefs = gql`
     createDev(firstName: String!, lastName: String!, email: String!, password: String!): Dev!
     loginDev(email: String!, password: String!): AuthPayload!
     googleCallback(code: String!): AuthPayload!
-    updateDev(id: ID!, firstName: String, lastName: String, email: String, bio: String): Dev!
+    updateDev(id: ID!, firstName: String, lastName: String, email: String, bio: String): UpdateDevPayload!
     updatePassword(id: ID!, currentPassword: String!, newPassword: String!): Boolean!
     deleteDev(id: ID!): Boolean!
     bookmarkArticle(devId: ID!, articleId: ID!): Dev!

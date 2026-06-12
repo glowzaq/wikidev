@@ -5,7 +5,7 @@ import { GET_DEV_BOOKMARKS } from "@/lib/graphql/queries/dev.queries";
 import { useQuery } from "@apollo/client/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Menu, Shield } from "lucide-react";
 
 export default function DashboardClient({ user }: { user?: User }) {
@@ -44,9 +44,21 @@ export default function DashboardClient({ user }: { user?: User }) {
         fetchPolicy: "cache-and-network"
     });
 
-    const filteredArticles = selectedCategory
-        ? data?.articles?.filter(art => art.category === selectedCategory) || []
-        : data?.articles || [];
+    const filteredArticles = (data?.articles || []).filter((article) => {
+        const matchesCategory = selectedCategory
+            ? article.category === selectedCategory
+            : true;
+
+        const query = searchQuery.trim().toLowerCase();
+
+        const matchesSearch = query
+            ? article.title.toLowerCase().includes(query) ||
+            article.content.toLowerCase().includes(query) ||
+            article.category.toLowerCase().includes(query)
+            : true;
+
+        return matchesCategory && matchesSearch;
+    });
 
     const recentArticles = filteredArticles.slice(0, 6);
 
@@ -79,14 +91,7 @@ export default function DashboardClient({ user }: { user?: User }) {
         }
     };
 
-    const handleSearch = (e: React.FormEvent) => {
-        e.preventDefault();
-        if (searchQuery.trim()) {
-            router.push(`/articles?q=${encodeURIComponent(searchQuery.trim())}`);
-        } else {
-            router.push(`/articles`);
-        }
-    };
+    
 
     return (
         <div className="h-screen bg-gray-50 flex overflow-hidden">
@@ -105,11 +110,20 @@ export default function DashboardClient({ user }: { user?: User }) {
                     } lg:translate-x-0 lg:static lg:z-auto lg:w-60 lg:max-w-none`}
             >
                 {/* Logo */}
-                <div className="px-6 border-b border-gray-200 flex-shrink-0 flex items-center h-[73px]">
-                    <Link href="/">
-                        <span className="font-display font-extrabold text-xl text-gray-900">
-                            wiki<span className="gradient-text">dev</span>
-                        </span>
+                <div className="px-6 border-b border-gray-200 flex items-center h-[73px]">
+                    <Link href="/" className="flex items-center gap-2 group">
+                        <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-600 to-violet-600 flex items-center justify-center shadow-md">
+                            <span className="text-white font-black text-lg">&lt;/&gt;</span>
+                        </div>
+
+                        <div className="flex flex-col leading-none">
+                            <span className="font-black text-2xl tracking-tight text-gray-900 transition-colors group-hover:text-indigo-600">
+                                wiki<span className="text-indigo-600">dev</span>
+                            </span>
+                            <span className="text-[10px] uppercase tracking-[0.2em] text-gray-400 font-semibold">
+                                Developer Wiki
+                            </span>
+                        </div>
                     </Link>
                 </div>
 
@@ -217,8 +231,7 @@ export default function DashboardClient({ user }: { user?: User }) {
 
                     <div className="flex items-center gap-3">
                         {/* Search */}
-                        <form
-                            onSubmit={handleSearch}
+                        <div
                             className="hidden md:flex items-center bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 w-48 focus-within:border-gray-400 focus-within:ring-1 focus-within:ring-gray-400 transition-all"
                         >
                             <input
@@ -228,7 +241,7 @@ export default function DashboardClient({ user }: { user?: User }) {
                                 placeholder="Search articles..."
                                 className="bg-transparent text-sm text-gray-800 placeholder-gray-400 outline-none w-full"
                             />
-                        </form>
+                        </div>
 
                         {/* Write button */}
                         <Link
@@ -245,22 +258,24 @@ export default function DashboardClient({ user }: { user?: User }) {
                     <div className="max-w-5xl mx-auto space-y-8">
 
                         {/* Quick write CTA banner */}
-                        <div className="fade-in rounded-xl p-6 bg-gray-900 text-white">
+                        <div className="fade-in rounded-2xl p-6 bg-indigo-50 border border-indigo-100">
                             <div className="flex items-center justify-between flex-wrap gap-4">
                                 <div>
-                                    <p className="text-gray-400 text-xs font-semibold uppercase tracking-widest mb-1">
+                                    <p className="text-indigo-500 text-xs font-semibold uppercase tracking-widest mb-1">
                                         Contribute
                                     </p>
-                                    <h2 className="font-display font-bold text-2xl mb-1">
+
+                                    <h2 className="font-display font-bold text-2xl mb-1 text-gray-900">
                                         Got something to share?
                                     </h2>
-                                    <p className="text-gray-400 text-sm">
+
+                                    <p className="text-gray-600 text-sm">
                                         Write an article and help fellow devs grow.
                                     </p>
                                 </div>
                                 <Link
                                     href="/dashboard/write"
-                                    className="bg-white text-gray-900 font-bold text-sm px-6 py-3 rounded-lg hover:bg-gray-100 transition-colors"
+                                    className="bg-indigo-600 text-white font-bold text-sm px-6 py-3 rounded-lg hover:bg-indigo-700 transition-colors"
                                 >
                                     Start Writing
                                 </Link>
