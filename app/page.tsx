@@ -142,15 +142,14 @@ export default function WikiDevLanding() {
 
           {/* Heading */}
           <h1
-            className={`fade-up delay-1 ${visible ? "visible" : ""} font-display font-extrabold text-4xl sm:text-5xl md:text-7xl text-gray-900 leading-tight mb-6`}
+            className={`fade-up delay-1 ${visible ? "visible" : ""
+              } font-display font-black text-5xl sm:text-6xl md:text-7xl tracking-tight leading-[0.95] text-gray-900 mb-6`}
           >
-            The wiki. built{" "}
-            <span className="underline decoration-gray-300 decoration-2 underline-offset-8">
-              for developers
-            </span>{" "}
-            by developers.
+            The wiki built{" "}
+            <span className="text-indigo-600">
+              for developers.
+            </span>
           </h1>
-
           <p
             className={`fade-up delay-2 ${visible ? "visible" : ""} text-lg md:text-xl text-gray-500 max-w-2xl mx-auto mb-10 leading-relaxed`}
           >
@@ -202,11 +201,8 @@ export default function WikiDevLanding() {
             <p className="text-sm font-semibold text-gray-400 uppercase tracking-widest mb-3">
               Why WikiDev?
             </p>
-            <h2 className="font-display font-bold text-4xl md:text-5xl text-gray-900">
-              Everything you need,{" "}
-              <span className="underline decoration-gray-300 decoration-2 underline-offset-8">
-                nothing you don&apos;t.
-              </span>
+            <h2 className="font-display font-bold text-4xl md:text-5xl tracking-tight text-gray-900">
+              Everything you need, nothing you don&apos;t.
             </h2>
           </div>
 
@@ -231,11 +227,8 @@ export default function WikiDevLanding() {
             <p className="text-sm font-semibold text-gray-400 uppercase tracking-widest mb-3">
               Browse
             </p>
-            <h2 className="font-display font-bold text-4xl md:text-5xl text-gray-900">
-              Explore by{" "}
-              <span className="underline decoration-gray-300 decoration-2 underline-offset-8">
-                category
-              </span>
+            <h2 className="font-display font-bold text-4xl md:text-5xl text-gray-900 tracking-tight">
+              Explore by category
             </h2>
             <p className="text-gray-500 mt-4 max-w-xl mx-auto">
               From frontend frameworks to database internals — find knowledge organized the way
@@ -260,28 +253,33 @@ export default function WikiDevLanding() {
       </section>
 
       {/* CTA */}
-      <section id="cta" className="py-24 px-6">
-        <div className="max-w-3xl mx-auto">
-          <div className="bg-gray-900 rounded-2xl p-12 text-center">
-            <p className="text-gray-400 text-sm font-semibold uppercase tracking-widest mb-4">
-              Open Source
+      {/* CTA */}
+      <section id="cta" className="py-24 px-4 sm:px-6 bg-white">
+        <div className="max-w-4xl mx-auto">
+          <div className="rounded-3xl p-6 sm:p-10 md:p-12 text-center bg-indigo-50 border border-indigo-100">
+            <p className="text-indigo-500 text-sm font-semibold uppercase tracking-widest mb-4">
+              Open Contribution
             </p>
-            <h2 className="font-display font-bold text-3xl md:text-5xl text-white mb-5 leading-tight">
-              Know something? <br />
+
+            <h2 className="font-display font-bold text-3xl sm:text-4xl md:text-5xl text-gray-900 mb-5 leading-tight">
+              Know something? <br className="hidden sm:block" />
               Share it.
             </h2>
-            <p className="text-gray-400 text-lg mb-10 max-w-lg mx-auto leading-relaxed">
-              WikiDev grows with every contribution. Write an article, improve an existing one, or
-              just fix a typo — everything counts.
+
+            <p className="text-gray-600 text-base sm:text-lg mb-8 sm:mb-10 max-w-lg mx-auto leading-relaxed">
+              WikiDev grows with every contribution. Write an article, improve an existing one,
+              or just fix a typo — everything counts.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
               <Link href="/register">
-                <button className="w-full sm:w-auto bg-white text-gray-900 font-bold text-sm px-8 py-4 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer">
+                <button className="w-full sm:w-auto bg-indigo-600 text-white font-bold text-sm px-8 py-4 rounded-xl hover:bg-indigo-700 transition-colors cursor-pointer">
                   Start Contributing
                 </button>
               </Link>
+
               <Link href="/articles">
-                <button className="w-full sm:w-auto border border-gray-600 text-gray-300 font-semibold text-sm px-8 py-4 rounded-lg hover:bg-gray-800 transition-colors cursor-pointer">
+                <button className="w-full sm:w-auto bg-white border border-indigo-200 text-indigo-700 font-semibold text-sm px-8 py-4 rounded-xl hover:bg-indigo-100 transition-colors cursor-pointer">
                   Explore Wiki
                 </button>
               </Link>
