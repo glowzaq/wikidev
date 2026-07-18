@@ -153,7 +153,7 @@ export default function WikiDevLanding() {
           <p
             className={`fade-up delay-2 ${visible ? "visible" : ""} text-lg md:text-xl text-gray-500 max-w-2xl mx-auto mb-10 leading-relaxed`}
           >
-            WikiDev is your go-to reference for web development — clean articles, real code
+            WikiDev is your go-to reference for web development, clean articles, real code
             examples, and community-driven knowledge you can trust.
           </p>
 

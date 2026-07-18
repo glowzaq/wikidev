@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-    title: "Wiki-Dev",
+    title: "wikidev",
     description: "Your one-stop place as a techie",
 };
 
