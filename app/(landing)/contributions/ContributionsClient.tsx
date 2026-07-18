@@ -124,7 +124,7 @@ export default function ContributionsClient({ user }: { user: User }) {
                         ) : articles.length === 0 ? (
                             <div className="p-20 text-center">
                                 <FileText size={48} className="mx-auto text-gray-200 mb-4" />
-                                <p className="text-gray-500 font-medium">You haven't made any contributions yet.</p>
+                                <p className="text-gray-500 font-medium">You have not made any contributions yet.</p>
                                 <Link href="/dashboard/write" className="text-gray-900 font-semibold hover:underline mt-2 inline-block">
                                     Start your first contribution &rarr;
                                 </Link>
