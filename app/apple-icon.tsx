@@ -26,21 +26,23 @@ export default function Icon() {
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        width: '36px',
-                        height: '36px',
-                        borderRadius: '12px',
+                        // Scale container down slightly to fit within the 32px canvas boundaries smoothly
+                        width: '28px',
+                        height: '28px',
+                        borderRadius: '8px',
                         background: 'linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%)',
-                        boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
                     }}
                 >
                     <span
                         style={{
                             color: 'white',
                             fontWeight: '900',
-                            fontSize: '18px',
+                            // Adjusted size slightly for proper canvas alignment
+                            fontSize: '14px',
+                            display: 'flex',
                         }}
                     >
-                        &lt;/&gt;
+                        {"</>"}
                     </span>
                 </div>
             </div>
